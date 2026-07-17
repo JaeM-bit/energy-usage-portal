@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gas and Electricity Usage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Dryden utilities</p>
+        <h1>Gas and Electricity Usage</h1>
+      </div>
+      <div class="refresh-note" id="refreshNote">Loading data...</div>
+    </header>
+
+    <main>
+      <section class="filters" aria-label="Filters">
+        <label>
+          Month
+          <select id="monthFilter">
+            <option value="">All months</option>
+          </select>
+        </label>
+        <label>
+          Type
+          <select id="typeFilter">
+            <option value="">All types</option>
+            <option value="Electricity">Electricity</option>
+            <option value="Gas">Gas</option>
+            <option value="Direct Debit">Direct Debit</option>
+          </select>
+        </label>
+        <label>
+          Year Totals
+          <select id="yearFilter">
+            <option value="">All years</option>
+          </select>
+        </label>
+        <button class="button" id="resetFilters" type="button">Reset</button>
+        <button class="button secondary" id="toggleSums" type="button" aria-expanded="false">
+          Show Sum
+        </button>
+        <button class="button secondary" id="toggleCompare" type="button" aria-expanded="false">
+          Compare
+        </button>
+      </section>
+
+      <section class="compare-panel" id="comparePanel" aria-label="Compare periods" hidden>
+        <div class="sum-head">
+          <div>
+            <p class="eyebrow">Compare</p>
+            <h2 id="compareTitle">All Months All Types Comparison</h2>
+          </div>
+          <span id="compareContext">0 years</span>
+        </div>
+        <div class="compare-controls">
+          <div class="segmented-control" role="group" aria-label="Compare period">
+            <button class="filter-chip is-active" type="button" data-compare-period="month">Month</button>
+            <button class="filter-chip" type="button" data-compare-period="quarter">Quarter</button>
+          </div>
+          <label id="compareMonthWrap">
+            Month
+            <select id="compareMonth">
+              <option value="">All months</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </label>
+          <label id="compareQuarterWrap" hidden>
+            Quarter
+            <select id="compareQuarter">
+              <option value="">All quarters</option>
+              <option value="Q1">Q1 - Jan to Mar</option>
+              <option value="Q2">Q2 - Apr to Jun</option>
+              <option value="Q3">Q3 - Jul to Sep</option>
+              <option value="Q4">Q4 - Oct to Dec</option>
+            </select>
+          </label>
+          <label>
+            Year
+            <select id="compareYear">
+              <option value="">All years</option>
+            </select>
+          </label>
+          <label>
+            Type
+            <select id="compareType">
+              <option value="">All types</option>
+              <option value="Electricity">Electricity</option>
+              <option value="Gas">Gas</option>
+              <option value="Direct Debit">Direct Debit</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead id="compareHead"></thead>
+            <tbody id="compareBody">
+              <tr>
+                <td>No comparison selected.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sum-panel" id="sumPanel" aria-label="Filtered row sums" hidden>
+        <div class="sum-head">
+          <div>
+            <p class="eyebrow">Filtered rows</p>
+            <h2>Sum of Current Selection</h2>
+          </div>
+          <span id="sumContext">0 records</span>
+        </div>
+        <div class="sum-grid">
+          <article data-total-kind="electricity">
+            <span>Elec kWh</span>
+            <strong id="sumElectricityKwh">0</strong>
+          </article>
+          <article data-total-kind="gas">
+            <span>Gas kWh</span>
+            <strong id="sumGasKwh">0</strong>
+          </article>
+          <article data-total-kind="electricity">
+            <span>EON Elec</span>
+            <strong id="sumElectricityCharge">£0.00</strong>
+          </article>
+          <article data-total-kind="gas">
+            <span>EON Gas</span>
+            <strong id="sumGasCharge">£0.00</strong>
+          </article>
+          <article>
+            <span>Direct Debit</span>
+            <strong id="sumDirectDebit">£0.00</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="sum-panel year-panel" id="yearPanel" aria-label="Year totals">
+        <div class="sum-head">
+          <div>
+            <p class="eyebrow">Year totals</p>
+            <h2 id="yearTitle">All Years All Types Totals</h2>
+          </div>
+          <span id="yearContext">0 records</span>
+        </div>
+        <div class="sum-grid">
+          <article data-total-kind="electricity">
+            <span>Elec kWh</span>
+            <strong id="yearElectricityKwh">0</strong>
+          </article>
+          <article data-total-kind="gas">
+            <span>Gas kWh</span>
+            <strong id="yearGasKwh">0</strong>
+          </article>
+          <article data-total-kind="electricity">
+            <span>EON Elec</span>
+            <strong id="yearElectricityCharge">£0.00</strong>
+          </article>
+          <article data-total-kind="gas">
+            <span>EON Gas</span>
+            <strong id="yearGasCharge">£0.00</strong>
+          </article>
+          <article>
+            <span>Direct Debit</span>
+            <strong id="yearDirectDebit">£0.00</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="table-section" aria-label="Transactions">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Transactions</p>
+            <h2>Filtered Utility Records</h2>
+          </div>
+          <span id="resultCount">0 records</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Elec kWh</th>
+                <th>Gas kWh</th>
+                <th>EON Elec</th>
+                <th>EON Gas</th>
+                <th>Direct Debit</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody">
+              <tr>
+                <td colspan="8">Loading data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
