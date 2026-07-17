@@ -1,4 +1,5 @@
 .DS_Store
 .codex/
+energy-usage-portal/
 __pycache__/
 *.pyc
