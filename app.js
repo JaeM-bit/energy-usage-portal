@@ -409,8 +409,8 @@ async function loadData() {
   if (els.refreshNote) {
     const generated = payload.generatedAt ? formatDate(payload.generatedAt.slice(0, 10)) : "";
     els.refreshNote.textContent = generated
-      ? `Last refreshed ${generated} from ${payload.sourceRange}`
-      : `Source: ${payload.sourceRange || "spreadsheet range"}`;
+      ? `Last refreshed ${generated}`
+      : "Source data unavailable";
   }
   populateMonths();
   populateYears();
