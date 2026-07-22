@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T17:52:21+01:00",
+  "generatedAt": "2026-07-22T13:22:33+01:00",
   "sourceWorkbook": "Energy usage workbook",
   "sourceRange": "Rates and Calcs!N10:V200",
   "records": [
@@ -1614,6 +1614,19 @@
       "directDebit": null,
       "balance": 329.02,
       "type": "Gas"
+    },
+    {
+      "sourceRow": 135,
+      "month": "2026-07-01",
+      "sourceMonth": "2026-07-01",
+      "date": "2026-07-20",
+      "electricityKwh": 613.7,
+      "gasKwh": 169.1,
+      "electricityCharge": -144.34,
+      "gasCharge": -20.35,
+      "directDebit": 198.03,
+      "balance": 362.36,
+      "type": "Electricity and Gas"
     }
   ]
 }
